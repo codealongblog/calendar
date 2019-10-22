@@ -1,0 +1,21 @@
+.month {
+	display: inline-block;
+	width: 100%;
+	height: 100%;
+	background-color: #eee;
+}
+
+.day {
+	display: inline-block;
+	font-weight: bold;
+	width: calc(100% / 7 - 4px);
+	height: calc(100% / 5 - 4px);
+	margin: 2px;
+	background-color: #fff;
+	vertical-align: top;
+}
+
+.day:nth-child(7n +1),
+.day:nth-child(7n) {
+	background-color: #ccc;
+}
