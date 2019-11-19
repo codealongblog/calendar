@@ -9,9 +9,9 @@ export class CalendarComponent implements OnInit {
 
   public days: Array<number>;
 
-  constructor() { }
+  constructor () { }
 
-  ngOnInit() {
+  ngOnInit () {
     const today = new Date();
     const dayOfFirstDay = new Date(today.getFullYear(), today.getMonth(), 1).getDay();
     const daysInMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
