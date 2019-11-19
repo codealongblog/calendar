@@ -2,15 +2,25 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon -e ts -w src npm run start",
+    "start": "ts-node src/server.ts"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/mongoose": "^5.5.23",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
+    "mongoose": "^5.7.7",
     "ts-node": "^8.4.1",
     "typescript": "^3.6.4"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.1",
+    "@types/node": "^12.11.7",
+    "nodemon": "^1.19.4"
   }
 }
