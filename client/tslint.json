@@ -61,6 +61,8 @@
       "single"
     ],
     "space-before-function-paren": true,
+    "typedef-whitespace": true,
+    "variable-name": false,
     "trailing-comma": false,
     "no-output-on-prefix": true,
     "use-input-property-decorator": true,

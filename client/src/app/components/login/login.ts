@@ -19,8 +19,9 @@ class LoginComponent extends BaseComponent implements OnInit  {
     }
 
     public login (): void {
-        this.cleanup.push(this.userService.createUser(this.name).subscribe());
-        console.log(`i'm submitting: ${this.name}`);
+        this.cleanup.push(this.userService.search(this.name).subscribe((user: any) => {
+            localStorage.setItem('user', JSON.stringify(user));
+        }));
     }
 }
 
