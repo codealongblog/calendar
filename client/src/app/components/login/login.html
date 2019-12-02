@@ -1,3 +1,6 @@
+<div *ngIf="invalidUserName">USERNAME INVALID</div>
 <form (ngSubmit)="login()">
-    <input type="text" [(ngModel)]="name" placeholder="Enter your name" name="name">
+    <mat-form-field class="login-button">
+        <input matInput placeholder="Enter your name" name="name" [(ngModel)]="name" #nameInput>
+    </mat-form-field>
 </form>

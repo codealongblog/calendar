@@ -2,3 +2,9 @@
     position: absolute;
     right: 20px;
 }
+
+.login-button {
+    display: block;
+    margin: 40vh auto;
+    width: 200px;
+}

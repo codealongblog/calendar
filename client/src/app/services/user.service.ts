@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 interface User {
     name: string;
@@ -10,13 +12,15 @@ interface User {
 class UserService {
     private _cachedUser: User;
     public onLogin: Subject<User>;
+    public onLogout: Subject<void>;
 
     public get cachedUser () : User {
         return this._cachedUser;
     }
 
-    constructor (private httpClient: HttpClient) {
+    constructor (private httpClient: HttpClient, private router: Router) {
         this.onLogin = new Subject();
+        this.onLogout = new Subject();
     }
 
     public isAuthenticated (): boolean {
@@ -26,6 +30,22 @@ class UserService {
             this.onLogin.next(this._cachedUser);
         }
         return !!this.cachedUser;
+    }
+
+    public loginUser (userName: string) : Observable<any> {
+        return this.search(userName).pipe(map((user: any) => {
+            localStorage.setItem('user', JSON.stringify(user));
+            this._cachedUser = user;
+            this.onLogin.next(user);
+            this.router.navigate(['calendar']);
+        }));
+    }
+
+    public logout () : void {
+        localStorage.removeItem('user');
+        this._cachedUser = null;
+        this.onLogout.next();
+        this.router.navigate(['']);
     }
 
     public create (userName: string): Observable<User> {

@@ -16,12 +16,19 @@ class TopbarComponent extends BaseComponent implements OnInit {
         this.userService.onLogin.subscribe(() => {
             this.userName = this.userService.cachedUser.name;
         });
+        this.userService.onLogout.subscribe(() => {
+            this.userName = null;
+        });
     }
 
     public ngOnInit (): void {
         if (this.userService.isAuthenticated()) {
             this.userName = this.userService.cachedUser.name;
         }
+    }
+
+    public logout () : void {
+        this.userService.logout();
     }
 }
 

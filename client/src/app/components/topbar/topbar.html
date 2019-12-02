@@ -1,7 +1,7 @@
 <mat-toolbar>
     <span *ngIf="userName" class="avatar">
         {{ userName }}
-        <button mat-icon-button color="primary" aria-label="Logout">
+        <button mat-icon-button color="primary" aria-label="Logout" (click)="logout()">
             <mat-icon>exit_to_app</mat-icon>
         </button>
     </span>
