@@ -19,3 +19,7 @@
 .day:nth-child(7n) {
 	background-color: #ccc;
 }
+
+.day.today {
+	background-color: #5dfc86;
+}

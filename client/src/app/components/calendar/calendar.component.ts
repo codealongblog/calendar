@@ -6,13 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./calendar.component.css']
 })
 export class CalendarComponent implements OnInit {
-
+  public todayDay: number;
   public days: Array<number>;
 
   constructor () { }
 
   ngOnInit () {
     const today = new Date();
+    this.todayDay = today.getDate();
     const dayOfFirstDay = new Date(today.getFullYear(), today.getMonth(), 1).getDay();
     const daysInMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
     this.days = [];
