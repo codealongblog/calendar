@@ -6,6 +6,7 @@ import * as cors from 'cors';
 
 const app = express();
 const port = 8080;
+const MONGO_DB_URL = process.env.MONGO_DB_URL || 'mongodb://localhost:27017/calendar';
 
 const serverStarted: Function = async () => {
     console.log(`Yo. I'm listening on ${port}`);
@@ -15,7 +16,7 @@ const serverStarted: Function = async () => {
     mongoose.connection.once('error', (err: Error) => {
         console.log(`DB ERROR: ${err}`);
     });
-    await mongoose.connect('mongodb://localhost:27017/calendar');
+    await mongoose.connect(MONGO_DB_URL);
 }
 
 app.use(bodyParser.urlencoded({ extended: false }));

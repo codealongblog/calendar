@@ -10,6 +10,7 @@ import { BaseComponent } from '../base.component';
 class LoginComponent extends BaseComponent implements OnInit, AfterContentInit {
     public name: string;
     public invalidUserName: boolean;
+    public unableToSignup: boolean;
     @ViewChild('nameInput') public nameInput: ElementRef;
 
     constructor (private userService: UserService) {
@@ -30,6 +31,15 @@ class LoginComponent extends BaseComponent implements OnInit, AfterContentInit {
             this.invalidUserName = false;
         }, () => {
             this.invalidUserName = true;
+        }));
+    }
+
+    public signUp () : void {
+        this.cleanup.push(this.userService.signUp(this.name).subscribe(() => {
+            this.name = '';
+            this.unableToSignup = false;
+        }, () => {
+            this.unableToSignup = true;
         }));
     }
 

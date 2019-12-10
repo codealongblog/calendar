@@ -8,3 +8,8 @@
     margin: 40vh auto;
     width: 200px;
 }
+
+.login-container {
+    max-width: 400px;
+    margin: auto;
+}
