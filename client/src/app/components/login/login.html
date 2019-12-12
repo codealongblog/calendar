@@ -1,6 +1,22 @@
-<div *ngIf="invalidUserName">USERNAME INVALID</div>
-<form (ngSubmit)="login()">
-    <mat-form-field class="login-button">
-        <input matInput placeholder="Enter your name" name="name" [(ngModel)]="name" #nameInput>
-    </mat-form-field>
-</form>
+<div class="login-container">
+    <mat-card>
+        <div *ngIf="invalidUserName">USERNAME INVALID</div>
+        <div *ngIf="unableToSignup">UNABLE TO CREATE ACCOUNT</div>
+        <mat-card-content>
+            <form (ngSubmit)="login()">
+                <mat-form-field class="login-button">
+                    <input matInput placeholder="Enter your name" name="name" [(ngModel)]="name" #nameInput>
+                </mat-form-field>
+            </form>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button color="primary" aria-label="Sign-up" (click)="signUp()">
+                Sign-up
+            </button>
+            <button mat-raised-button color="primary" aria-label="Login" (click)="login()">
+                Login
+            </button>
+        </mat-card-actions>
+    </mat-card>
+</div>
+

@@ -34,11 +34,21 @@ class UserService {
 
     public loginUser (userName: string) : Observable<any> {
         return this.search(userName).pipe(map((user: any) => {
-            localStorage.setItem('user', JSON.stringify(user));
-            this._cachedUser = user;
-            this.onLogin.next(user);
-            this.router.navigate(['calendar']);
+            this.postLogin(user);
         }));
+    }
+
+    public signUp (userName: string) : Observable<any> {
+        return this.create(userName).pipe(map((user: any) => {
+            this.postLogin(user);
+        }));
+    }
+
+    protected postLogin (user: any) : void {
+        localStorage.setItem('user', JSON.stringify(user));
+        this._cachedUser = user;
+        this.onLogin.next(user);
+        this.router.navigate(['dashboard']);
     }
 
     public logout () : void {
