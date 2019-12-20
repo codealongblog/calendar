@@ -1,40 +1,46 @@
 import { Component, OnInit } from '@angular/core';
-
+import * as moment from 'moment';
 @Component({
   selector: 'calendar',
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.css']
 })
 export class CalendarComponent implements OnInit {
-  public todayDay: number;
-  public month: string;
-  public days: Array<number>;
+
+  public days: Array<any>;
+  public month: moment.Moment;
+  public today: moment.Moment;
 
   constructor () { }
 
   ngOnInit () {
-    const today = new Date();
-    this.todayDay = today.getDate();
-    const dayOfFirstDay = new Date(today.getFullYear(), today.getMonth(), 1).getDay();
-    const daysInMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
-    this.month = today.toLocaleString('default', { month: 'long' });
+    this.today = moment();
+    this.month = moment().startOf('month');
+    this.calculateDays();
+  }
+
+  private calculateDays () : void {
+    const dayOfFirstDay: number = this.month.day();
+    const daysInMonth: number = this.month.daysInMonth();
+
+    const dayToAdd: moment.Moment = moment(this.month);
+    dayToAdd.add(-( dayOfFirstDay + 1), 'days');
+
     this.days = [];
-    for (let i = 0; i < dayOfFirstDay; i ++) {
-      this.days.push(undefined);
-    }
-    for (let i = 1; i < daysInMonth + 1; i ++) {
-      this.days.push(i);
-    }
-    for (let i = 0; i < (7 - (daysInMonth + dayOfFirstDay) % 7); i ++) {
-      this.days.push(undefined);
+    for (let i = 0; i < 42; i ++) {
+      this.days.push({ date: moment(dayToAdd.add(1, 'days')) });
     }
   }
 
   public prevMonth () : void {
+    this.month.add(-1, 'month');
+    this.calculateDays();
     console.log('previous');
   }
 
   public nextMonth () : void {
+    this.month.add(1, 'month');
+    this.calculateDays();
     console.log('next');
   }
 

@@ -40,3 +40,7 @@
 .header {
 	text-align: center;
 }
+
+.not-this-month {
+	color: #777a78;
+}
