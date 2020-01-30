@@ -1,6 +1,7 @@
 import * as express from 'express';
 import * as mongoose from 'mongoose';
 import { UserRoutes } from './models/user/user.routes';
+import { ShindigRoutes } from './models/shindig/shindig.routes';
 import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
 
@@ -24,12 +25,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.use('/users', UserRoutes);
-
-app.get('/', (req : express.Request, resp: express.Response) => {
-    resp.send('hello world');
-
-    // UserModel.create({ name: 'Dan theMan' });
-});
+app.use('/shindigs', ShindigRoutes);
 
 app.listen(port, async () => {
     serverStarted();
