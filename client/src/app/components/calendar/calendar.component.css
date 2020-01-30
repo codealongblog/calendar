@@ -1,6 +1,5 @@
 .calendar-container {
 	display: flex;
-	height: 400px;
 }
 
 .prev-month-container,
@@ -8,10 +7,14 @@
 	align-self: center;
 }
 
+.month-container {
+	flex: 1;
+}
+
 .month {
-	width: 100%;
 	background-color: #eee;
-	height: calc(100% - 81px);
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
 }
 
 .month-name {
@@ -19,13 +22,16 @@
 }
 
 .day {
-	display: inline-block;
 	font-weight: bold;
-	width: calc(100% / 7 - 4px);
-	height: calc(100% / 5 - 4px);
+	height: 14vh;
 	margin: 2px;
 	background-color: #fff;
 	vertical-align: top;
+	cursor: pointer;
+}
+
+.day:hover {
+	box-shadow: 2px 2px #808080;
 }
 
 .day:nth-child(7n +1),
@@ -43,4 +49,14 @@
 
 .not-this-month {
 	color: #777a78;
+}
+
+.shindig {
+	background-color: #006600;
+	color: white;
+	border-radius: 4px;
+	padding: 0px 2px;
+	text-align: center;
+	font-size: .9rem;
+    font-weight: normal;
 }

@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 interface User {
+    _id: string;
     name: string;
 }
 
@@ -61,6 +62,7 @@ class UserService {
     public create (userName: string): Observable<User> {
         return this.httpClient.post<User>('http://localhost:8080/users/', { name: userName });
     }
+
     public search (userName: string): Observable<User> {
         return this.httpClient.get<User>(`http://localhost:8080/users?userName=${userName}`);
     }
