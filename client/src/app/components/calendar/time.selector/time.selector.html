@@ -1,0 +1,10 @@
+<mat-select class="time" [(ngModel)]="startHour" name="startHour">
+    <mat-option *ngFor="let hour of hours" [value]="hour">{{ hour.toString().padStart(2, '0') }}</mat-option>
+</mat-select>
+<mat-select class="time" [(ngModel)]="startMinute" name="startMinute">
+    <mat-option *ngFor="let minute of minutes" [value]="minute">{{ minute.toString().padStart(2, '0') }}</mat-option>
+</mat-select>
+<mat-select class="time" [(ngModel)]="startAmpm" name="startAmpm">
+    <mat-option value="AM">AM</mat-option>
+    <mat-option value="PM">PM</mat-option>
+</mat-select>

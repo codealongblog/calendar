@@ -4,11 +4,12 @@ import { Observable } from 'rxjs';
 import { Moment } from 'moment';
 
 interface Shindig {
-    name: string;
-    userId: string;
-    description: string;
-    startDate: Moment;
-    endDate: Moment;
+    _id?: string;
+    name?: string;
+    userId?: string;
+    description?: string;
+    startDate?: Moment;
+    endDate?: Moment;
 }
 
 @Injectable()
@@ -18,6 +19,10 @@ class ShindigService {
 
     public create (shindig: Shindig): Observable<Shindig> {
         return this.httpClient.post<Shindig>(`http://localhost:8080/shindigs`, shindig);
+    }
+
+    public update (shindig: Shindig): Observable<Shindig> {
+        return this.httpClient.put<Shindig>(`http://localhost:8080/shindigs/${shindig._id}`, shindig);
     }
 
     public search (userId: string, startDate: Moment, endDate: Moment) : Observable<any> {

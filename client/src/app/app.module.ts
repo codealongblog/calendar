@@ -25,6 +25,7 @@ import { AddEventDialogComponent } from './components/calendar/add.event.dialog/
 
 import { UserService } from './services/user.service';
 import { ShindigService } from './services/shindig.service';
+import { TimeSelectorComponent } from './components/calendar/time.selector/time.selector';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { ShindigService } from './services/shindig.service';
     DashboardComponent,
     HomeComponent,
     LoginComponent,
-    TopbarComponent
+    TopbarComponent,
+    TimeSelectorComponent
   ],
   imports: [
     MatFormFieldModule,

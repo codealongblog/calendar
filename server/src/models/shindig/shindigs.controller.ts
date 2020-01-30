@@ -18,6 +18,19 @@ class ShindigsController {
         }
     }
 
+    public static async update (req: express.Request, resp: express.Response) : Promise<void> {
+        let shindig: Shindig;
+        try {
+            shindig = await ShindigModel.findByIdAndUpdate(req.params.id, req.body);
+            resp.status(200);
+            resp.send(shindig);
+        } catch (err) {
+            console.log(err);
+            resp.status(500);
+            resp.end();
+        }
+    }
+
     public static async search ( req: express.Request, resp: express.Response) : Promise<void> {
         let results: Array<Shindig>;
         try {

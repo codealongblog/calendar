@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AddEventDialogComponent } from './add.event.dialog/add.event.dialog';
 import { UserService } from 'src/app/services/user.service';
 import { ShindigService, Shindig } from 'src/app/services/shindig.service';
@@ -71,7 +71,25 @@ export class CalendarComponent extends BaseComponent implements OnInit {
   }
 
   public clickDay (date: moment.Moment) : void {
-    this.matDialog.open(AddEventDialogComponent, { data: { date } });
+    const ref: MatDialogRef<AddEventDialogComponent> = this.matDialog.open(AddEventDialogComponent, { data: { shindig: { startDate: date, endDate: date } } });
+    this.cleanup.push(ref.afterClosed().subscribe((shindig: Shindig) => {
+      this.cleanup.push(this.shindigService.create(shindig).subscribe(() => {
+        this.fetchEvents();
+      }));
+    }));
+  }
+
+  public editShindig (event: Event, shindigToEdit: Shindig) : void {
+    event.stopPropagation();
+    event.preventDefault();
+    const ref: MatDialogRef<AddEventDialogComponent> = this.matDialog.open(AddEventDialogComponent, { data: { shindig: shindigToEdit } });
+    this.cleanup.push(ref.afterClosed().subscribe((updatedShindig: Shindig) => {
+      if (updatedShindig) {
+        this.cleanup.push(this.shindigService.update(updatedShindig).subscribe(() => {
+          this.fetchEvents();
+        }));
+      }
+    }));
   }
 
 }

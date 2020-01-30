@@ -1,37 +1,19 @@
-<h2 mat-dialog-title>Add Event for {{ data.date | date: 'longDate' }}</h2>
+<h2 mat-dialog-title> {{ addOrEdit }} Event for {{ shindig.startDate | date: 'longDate' }}</h2>
 <mat-dialog-content>
     <form class="">
         <div>
-            <mat-form-field class=""><input matInput placeholder="Name" [(ngModel)]="name" name="name"></mat-form-field>
+            <mat-form-field class=""><input matInput placeholder="Name" [(ngModel)]="shindig.name" name="name"></mat-form-field>
         </div>
         <div>
-            <mat-form-field class=""><textarea matInput placeholder="Description" [(ngModel)]="description" name="description"></textarea></mat-form-field>
+            <mat-form-field class=""><textarea matInput placeholder="Description" [(ngModel)]="shindig.description" name="description"></textarea></mat-form-field>
         </div>
         <label>
             <div>Start Time</div>
-            <mat-select class="time" [(ngModel)]="startHour" name="startHour">
-                <mat-option *ngFor="let hour of hours" [value]="hour">{{ hour.toString().padStart(2, '0') }}</mat-option>
-            </mat-select>
-            <mat-select class="time" [(ngModel)]="startMinute" name="startMinute">
-                <mat-option *ngFor="let minute of minutes" [value]="minute">{{ minute.toString().padStart(2, '0') }}</mat-option>
-            </mat-select>
-            <mat-select class="time" [(ngModel)]="startAmpm" name="startAmpm">
-                <mat-option value="AM">AM</mat-option>
-                <mat-option value="PM">PM</mat-option>
-            </mat-select>
+            <time-selector [date]="shindig.startDate"></time-selector>
         </label>
         <label>
             <div>End Time</div>
-            <mat-select class="time" [(ngModel)]="endHour" name="endHour">
-                <mat-option *ngFor="let hour of hours" [value]="hour">{{ hour.toString().padStart(2, '0') }}</mat-option>
-            </mat-select>
-            <mat-select class="time" [(ngModel)]="endMinute" name="endMinute">
-                <mat-option *ngFor="let minute of minutes" [value]="minute">{{ minute.toString().padStart(2, '0') }}</mat-option>
-            </mat-select>
-            <mat-select class="time" [(ngModel)]="endAmpm" name="endAmpm">
-                <mat-option value="AM">AM</mat-option>
-                <mat-option value="PM">PM</mat-option>
-            </mat-select>
+            <time-selector [date]="shindig.endDate"></time-selector>
         </label>
     </form>
 </mat-dialog-content>
