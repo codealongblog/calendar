@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import * as moment from 'moment';
 
 @Component({
@@ -7,26 +7,26 @@ import * as moment from 'moment';
     styleUrls: ['./time.selector.css']
 })
 
-class TimeSelectorComponent implements OnInit {
-    public hours: Array<number> = [];
-    public minutes: Array<number> = [];
+class TimeSelectorComponent {
+    public hours: Array<number> = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+    public minutes: Array<number> = Array.from(Array(60).keys());
 
-    public startHour: number;
-    public startMinute: number;
-    public startAmpm: string;
-
-    public endHour: number;
-    public endMinute: number;
-    public endAmpm: string;
     @Input() public date: moment.Moment;
 
-    public ngOnInit () {
-        for (let i = 1; i < 13; i++) {
-            this.hours.push(i);
-        }
-        for (let i = 1; i < 60; i++) {
-            this.minutes.push(i);
-        }
+    public changeTime (value: string, type: string) {
+    switch (type) {
+        case 'hour':
+        case 'minute':
+            this.date.set(type, Number(value));
+            break;
+        case 'ampm':
+            const currentHour: number = this.date.get('hour');
+            const currentAmpm: string = currentHour < 12 ? 'AM' : 'PM';
+            if (value !== currentAmpm) {
+                this.date.set('hour', currentHour + (value === 'AM' ? -12 : 12));
+            }
+            break;
+    }
     }
 
 }
