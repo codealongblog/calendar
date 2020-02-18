@@ -18,6 +18,7 @@ import { MatCardModule } from '@angular/material/card';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
+import { SwiperModule } from 'ngx-swiper-wrapper';
 
 import { AddEventDialogComponent } from './components/calendar/add.event.dialog/add.event.dialog';
 
@@ -39,6 +40,7 @@ import { TimeSelectorComponent } from './components/calendar/time.selector/time.
     TimeSelectorComponent
   ],
   imports: [
+    SwiperModule,
     MatFormFieldModule,
     MatInputModule,
     MatToolbarModule,
