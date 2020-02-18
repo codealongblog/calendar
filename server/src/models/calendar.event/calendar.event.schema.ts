@@ -1,7 +1,7 @@
 import * as mongoose from 'mongoose';
 import { ObjectId } from 'bson';
 
-interface Shindig {
+interface CalendarEvent {
     _id?: ObjectId,
     userId: ObjectId,
     name: string,
@@ -11,9 +11,9 @@ interface Shindig {
     crontab?: string
 }
 
-interface ShindigDocument extends Omit<Shindig, '_id'>, mongoose.Document {}
+interface CalendarEventDocument extends Omit<CalendarEvent, '_id'>, mongoose.Document {}
 
-let ShindigSchema: mongoose.Schema = new mongoose.Schema({
+let CalendarEventSchema: mongoose.Schema = new mongoose.Schema({
     name: { type: String },
     userId: { type: ObjectId, required: true },
     startDate: { type: Date, required: true },
@@ -22,4 +22,4 @@ let ShindigSchema: mongoose.Schema = new mongoose.Schema({
     crontab: { type: String, required: false },
 });
 
-export { Shindig, ShindigSchema, ShindigDocument };
+export { CalendarEvent, CalendarEventSchema, CalendarEventDocument };

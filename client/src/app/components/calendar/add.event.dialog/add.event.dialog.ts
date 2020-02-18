@@ -1,11 +1,12 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Shindig } from 'src/app/services/shindig.service';
+import { CalendarEvent, CalendarEventService } from 'src/app/services/calendar.event.service';
 import { BaseComponent } from '../../base.component';
 import { UserService } from 'src/app/services/user.service';
+import { Observable } from 'rxjs';
 
 interface AddEventData {
-    shindig: Shindig;
+    calendarEvent: CalendarEvent;
 }
 
 @Component({
@@ -15,24 +16,48 @@ interface AddEventData {
 })
 
 class AddEventDialogComponent extends BaseComponent implements OnInit {
-    public shindig: Shindig;
+    public calendarEvent: CalendarEvent;
     public addOrEdit: string = 'Add';
-    constructor (public dialogRef: MatDialogRef<AddEventDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: AddEventData, public userService: UserService) {
+    public confirmingDelete: boolean;
+
+    constructor (private dialogRef: MatDialogRef<AddEventDialogComponent>, @Inject(MAT_DIALOG_DATA) private data: AddEventData, private userService: UserService, private calendarEventService: CalendarEventService) {
         super();
     }
 
     public ngOnInit () {
-        this.shindig = Object.assign({  }, this.data.shindig);
-        if (this.shindig._id) {
+        this.calendarEvent = Object.assign({  }, this.data.calendarEvent);
+        if (this.calendarEvent._id) {
             this.addOrEdit = 'Edit';
         }
-        if (!this.shindig.userId) {
-            this.shindig.userId = this.userService.cachedUser._id;
+        if (!this.calendarEvent.userId) {
+            this.calendarEvent.userId = this.userService.cachedUser._id;
         }
     }
 
     public saveEvent () : void {
-        this.dialogRef.close(this.shindig);
+        let obs: Observable<any>;
+        if (this.calendarEvent._id) {
+            obs = this.calendarEventService.update(this.calendarEvent);
+        } else {
+            obs = this.calendarEventService.create(this.calendarEvent);
+        }
+        this.cleanup.push(obs.subscribe(() => {
+            this.dialogRef.close();
+        }));
+    }
+
+    public initiateDelete () : void {
+        this.confirmingDelete = true;
+    }
+
+    public cancelDelete () : void {
+        this.confirmingDelete = false;
+    }
+
+    public deleteEvent () : void {
+        this.cleanup.push(this.calendarEventService.delete(this.calendarEvent).subscribe(() => {
+            this.dialogRef.close();
+        }));
     }
 }
 

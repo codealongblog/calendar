@@ -24,7 +24,7 @@ import { AddEventDialogComponent } from './components/calendar/add.event.dialog/
 
 
 import { UserService } from './services/user.service';
-import { ShindigService } from './services/shindig.service';
+import { CalendarEventService } from './services/calendar.event.service';
 import { TimeSelectorComponent } from './components/calendar/time.selector/time.selector';
 
 @NgModule({
@@ -58,7 +58,7 @@ import { TimeSelectorComponent } from './components/calendar/time.selector/time.
   ],
   providers: [
     UserService,
-    ShindigService
+    CalendarEventService
   ],
   bootstrap: [AppComponent]
 })

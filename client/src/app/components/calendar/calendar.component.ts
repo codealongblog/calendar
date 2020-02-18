@@ -3,7 +3,7 @@ import * as moment from 'moment';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AddEventDialogComponent } from './add.event.dialog/add.event.dialog';
 import { UserService } from 'src/app/services/user.service';
-import { ShindigService, Shindig } from 'src/app/services/shindig.service';
+import { CalendarEventService, CalendarEvent } from 'src/app/services/calendar.event.service';
 import { BaseComponent } from '../base.component';
 @Component({
   selector: 'calendar',
@@ -16,7 +16,7 @@ export class CalendarComponent extends BaseComponent implements OnInit {
   public month: moment.Moment;
   public today: moment.Moment;
 
-  constructor (private matDialog: MatDialog, private userService: UserService, private shindigService: ShindigService) {
+  constructor (private matDialog: MatDialog, private userService: UserService, private calendarEventService: CalendarEventService) {
     super();
   }
 
@@ -26,7 +26,7 @@ export class CalendarComponent extends BaseComponent implements OnInit {
     this.fetchEvents();
   }
 
-  private calculateDays (eventMap: Map<string, Array<Shindig>>) : void {
+  private calculateDays (eventMap: Map<string, Array<CalendarEvent>>) : void {
     const dayOfFirstDay: number = this.month.day();
     const daysInMonth: number = this.month.daysInMonth();
 
@@ -36,8 +36,8 @@ export class CalendarComponent extends BaseComponent implements OnInit {
     this.days = [];
     for (let i = 0; i < 42; i ++) {
       const date: moment.Moment = moment(dayToAdd.add(1, 'days'));
-      const shindigs: Array<Shindig> = eventMap.get(date.startOf('day').format('YYYY-MM-DD'));
-      const day: any = { date: date, shindigs: shindigs };
+      const calendarEvents: Array<CalendarEvent> = eventMap.get(date.startOf('day').format('YYYY-MM-DD'));
+      const day: any = { date: date, calendarEvents: calendarEvents };
       this.days.push(day);
     }
   }
@@ -46,12 +46,12 @@ export class CalendarComponent extends BaseComponent implements OnInit {
     const startDate: moment.Moment = moment(this.month).startOf('month').subtract(10, 'days');
     const endDate: moment.Moment = moment(this.month).endOf('month').add(10, 'days');
 
-    this.cleanup.push(this.shindigService.search(this.userService.cachedUser._id, startDate, endDate).subscribe((shindigs: Array<Shindig>) => {
-      const eventMap: Map<string, Array<Shindig>> = new Map();
-      for (const shindig of shindigs) {
-        const date: moment.Moment = moment(shindig.startDate).startOf('day');
-        const digs: Array<Shindig> = eventMap.get(date.format('YYYY-MM-DD')) || [];
-        digs.push(shindig);
+    this.cleanup.push(this.calendarEventService.search(this.userService.cachedUser._id, startDate, endDate).subscribe((calendarEvents: Array<CalendarEvent>) => {
+      const eventMap: Map<string, Array<CalendarEvent>> = new Map();
+      for (const calendarEvent of calendarEvents) {
+        const date: moment.Moment = moment(calendarEvent.startDate).startOf('day');
+        const digs: Array<CalendarEvent> = eventMap.get(date.format('YYYY-MM-DD')) || [];
+        digs.push(calendarEvent);
         eventMap.set(date.format('YYYY-MM-DD'), digs);
       }
       this.calculateDays(eventMap);
@@ -71,24 +71,18 @@ export class CalendarComponent extends BaseComponent implements OnInit {
   }
 
   public clickDay (date: moment.Moment) : void {
-    const ref: MatDialogRef<AddEventDialogComponent> = this.matDialog.open(AddEventDialogComponent, { data: { shindig: { startDate: date, endDate: date } } });
-    this.cleanup.push(ref.afterClosed().subscribe((shindig: Shindig) => {
-      this.cleanup.push(this.shindigService.create(shindig).subscribe(() => {
-        this.fetchEvents();
-      }));
+    const ref: MatDialogRef<AddEventDialogComponent> = this.matDialog.open(AddEventDialogComponent, { data: { calendarEvent: { startDate: date, endDate: date } } });
+    this.cleanup.push(ref.afterClosed().subscribe((calendarEvent: CalendarEvent) => {
+      this.fetchEvents();
     }));
   }
 
-  public editShindig (event: Event, shindigToEdit: Shindig) : void {
+  public editCalendarEvent (event: Event, calendarEventToEdit: CalendarEvent) : void {
     event.stopPropagation();
     event.preventDefault();
-    const ref: MatDialogRef<AddEventDialogComponent> = this.matDialog.open(AddEventDialogComponent, { data: { shindig: shindigToEdit } });
-    this.cleanup.push(ref.afterClosed().subscribe((updatedShindig: Shindig) => {
-      if (updatedShindig) {
-        this.cleanup.push(this.shindigService.update(updatedShindig).subscribe(() => {
-          this.fetchEvents();
-        }));
-      }
+    const ref: MatDialogRef<AddEventDialogComponent> = this.matDialog.open(AddEventDialogComponent, { data: { calendarEvent: calendarEventToEdit } });
+    this.cleanup.push(ref.afterClosed().subscribe(() => {
+      this.fetchEvents();
     }));
   }
 

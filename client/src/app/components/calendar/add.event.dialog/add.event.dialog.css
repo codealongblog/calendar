@@ -5,3 +5,8 @@ h2 {
 .time {
     width: 33%;
 }
+
+mat-dialog-actions {
+    display: flex;
+    justify-content: space-between;
+}

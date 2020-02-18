@@ -1,23 +1,28 @@
-<h2 mat-dialog-title> {{ addOrEdit }} Event for {{ shindig.startDate | date: 'longDate' }}</h2>
+<h2 mat-dialog-title> {{ addOrEdit }} Event for {{ calendarEvent.startDate | date: 'longDate' }}</h2>
 <mat-dialog-content>
     <form class="">
         <div>
-            <mat-form-field class=""><input matInput placeholder="Name" [(ngModel)]="shindig.name" name="name"></mat-form-field>
+            <mat-form-field class=""><input matInput placeholder="Name" [(ngModel)]="calendarEvent.name" name="name"></mat-form-field>
         </div>
         <div>
-            <mat-form-field class=""><textarea matInput placeholder="Description" [(ngModel)]="shindig.description" name="description"></textarea></mat-form-field>
+            <mat-form-field class=""><textarea matInput placeholder="Description" [(ngModel)]="calendarEvent.description" name="description"></textarea></mat-form-field>
         </div>
         <label>
             <div>Start Time</div>
-            <time-selector [date]="shindig.startDate"></time-selector>
+            <time-selector [date]="calendarEvent.startDate"></time-selector>
         </label>
         <label>
             <div>End Time</div>
-            <time-selector [date]="shindig.endDate"></time-selector>
+            <time-selector [date]="calendarEvent.endDate"></time-selector>
         </label>
     </form>
 </mat-dialog-content>
-<mat-dialog-actions>
-    <button mat-button mat-dialog-close>Close</button>
-    <button mat-button mat-dialog-close (click)="saveEvent()">Save</button>
+<mat-dialog-actions *ngIf="!confirmingDelete">
+    <button mat-raised-button (click)="initiateDelete()" color="warn">Delete</button>
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-raised-button (click)="saveEvent()" color="primary">Save</button>
+</mat-dialog-actions>
+<mat-dialog-actions *ngIf="confirmingDelete">
+    <button mat-button (click)="cancelDelete()">Cancel</button>
+    <button mat-raised-button (click)="deleteEvent()" color="warn">Confirm</button>
 </mat-dialog-actions>
