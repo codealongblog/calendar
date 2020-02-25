@@ -1,12 +1,14 @@
 <div class="time-container">
-    <mat-select class="time" [ngModel]="date.format('h')" name="Hour" (ngModelChange)="changeTime($event, 'hour')">
-        <mat-option *ngFor="let hour of hours" [value]="'' + hour">{{ hour.toString().padStart(2, '0') }}</mat-option>
-    </mat-select>
-    <mat-select class="time" [ngModel]="date.format('m')" name="Minute" (ngModelChange)="changeTime($event, 'minute')">
-        <mat-option *ngFor="let minute of minutes" [value]="'' + minute">{{ minute.toString().padStart(2, '0') }}</mat-option>
-    </mat-select>
-    <mat-select class="time" [ngModel]="date.format('A')" name="Ampm" (ngModelChange)="changeTime($event, 'ampm')">
-        <mat-option value="AM">AM</mat-option>
-        <mat-option value="PM">PM</mat-option>
-    </mat-select>
+
+    <swiper [config]="config" [index]="date.format('h') - 1" (indexChange)="changeTime($event, 'hour')">
+        <div *ngFor="let hour of hours">{{ hour.toString().padStart(2, '0') }}</div>
+    </swiper>
+    <swiper [config]="config" [index]="date.format('m')" (indexChange)="changeTime($event, 'minute')">
+        <div *ngFor="let minute of minutes">{{ minute.toString().padStart(2, '0') }}</div>
+    </swiper>
+    <swiper [config]="config" [index]="date.format('HH') <= 12 ? 0 : 1" (indexChange)="changeTime($event, 'ampm')">
+        <div>AM</div>
+        <div>PM</div>
+    </swiper>
+
 </div>
