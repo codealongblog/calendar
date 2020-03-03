@@ -1,14 +1,13 @@
 <div class="time-container">
 
-    <swiper [config]="config" [index]="date.format('h') - 1" (indexChange)="changeTime($event, 'hour')">
-        <div *ngFor="let hour of hours">{{ hour.toString().padStart(2, '0') }}</div>
+    <swiper [config]="config" [index]="date.format('H')" (indexChange)="changeTime($event, 'hour')">
+        <div *ngFor="let hour of hours; let i = index">{{ hourLabels[i] }}</div>
     </swiper>
     <swiper [config]="config" [index]="date.format('m')" (indexChange)="changeTime($event, 'minute')">
         <div *ngFor="let minute of minutes">{{ minute.toString().padStart(2, '0') }}</div>
     </swiper>
-    <swiper [config]="config" [index]="date.format('HH') <= 12 ? 0 : 1" (indexChange)="changeTime($event, 'ampm')">
-        <div>AM</div>
-        <div>PM</div>
-    </swiper>
+
+    <div *ngIf="date.format('HH') < 12">AM</div>
+    <div *ngIf="date.format('HH') >= 12">PM</div>
 
 </div>

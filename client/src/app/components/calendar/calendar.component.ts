@@ -71,7 +71,7 @@ export class CalendarComponent extends BaseComponent implements OnInit {
   }
 
   public clickDay (date: moment.Moment) : void {
-    const ref: MatDialogRef<AddEventDialogComponent> = this.matDialog.open(AddEventDialogComponent, { data: { calendarEvent: { startDate: date, endDate: date } } });
+    const ref: MatDialogRef<AddEventDialogComponent> = this.matDialog.open(AddEventDialogComponent, { data: { calendarEvent: { startDate: moment(date), endDate: moment(date) } } });
     this.cleanup.push(ref.afterClosed().subscribe((calendarEvent: CalendarEvent) => {
       this.fetchEvents();
     }));

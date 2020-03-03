@@ -1,6 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import * as moment from 'moment';
 import { SwiperConfigInterface, SwiperComponent } from 'ngx-swiper-wrapper';
+import { Observable, of, interval, Subject } from 'rxjs';
+import { debounce, debounceTime } from 'rxjs/operators';
+import { BaseComponent } from '../../base.component';
 
 @Component({
     selector: 'time-selector',
@@ -8,59 +11,57 @@ import { SwiperConfigInterface, SwiperComponent } from 'ngx-swiper-wrapper';
     styleUrls: ['./time.selector.css']
 })
 
-class TimeSelectorComponent implements OnInit {
-    public hours: Array<number> = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+class TimeSelectorComponent extends BaseComponent implements OnInit {
+    public hours: Array<number> = Array.from(Array(24).keys());
+    public hourLabels: Array<number> = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
     public minutes: Array<number> = Array.from(Array(60).keys());
-
     public config: SwiperConfigInterface;
+
+    public hourChangeEvent: Subject<any> = new Subject();
+    public minuteChangeEvent: Subject<any> = new Subject();
+    public ampmChangeEvent: Subject<any> = new Subject();
 
     @Input() public date: moment.Moment;
 
-    public ngOnInit () : void {
+    public ngOnInit (): void {
+
         this.config = {
             direction: 'vertical',
             slidesPerView: 3,
             centeredSlides: true,
-            keyboard: true,
+            keyboard: false,
             grabCursor: true,
             mousewheel: true,
             scrollbar: false,
-
-
-            // effect: 'coverflow',
-            // coverflowEffect: {
-            //   rotate: 50,
-            //   stretch: 0,
-            //   depth: 10,
-            //   modifier: 1,
-            //   slideShadows : false,
-            // },
-
+            freeMode: true,
+            freeModeSticky: true,
+            freeModeMomentum: false
         };
-        console.log(`HOUR: ${this.date.format('h')}` );
-        console.log(`MINUTE: ${this.date.format('m')}` );
-        console.log(`AMPM: ${Number(this.date.format('HH')) < 12 ? 'AM' : 'PM'}` );
 
+        this.cleanup.push(this.hourChangeEvent.pipe(debounceTime(200)).subscribe((index: number) => {
+            console.log('hour');
+            this.date.set('hour', this.hours[index]);
+        }));
+        this.cleanup.push(this.minuteChangeEvent.pipe(debounceTime(200)).subscribe((index: number) => {
+            console.log('minute');
+            this.date.set('minute', this.minutes[index]);
+        }));
     }
 
     public changeTime (index: number, type: string) {
-    switch (type) {
-        case 'hour':
-            this.date.set(type, this.hours[index]);
-            break;
-        case 'minute':
-            this.date.set(type, this.minutes[index]);
-            break;
-        case 'ampm':
-            const currentHour: number = this.date.get('hour');
-            const currentAmpm: number = currentHour < 12 ? 0 : 1;
-            if (index !== currentAmpm) {
-                this.date.set('hour', currentHour + (index === 0 ? -12 : 12));
-            }
-            break;
-    }
+        switch (type) {
+            case 'hour':
+                this.hourChangeEvent.next(index);
+                break;
+            case 'minute':
+                this.minuteChangeEvent.next(index);
+                break;
+        }
+
+
     }
 
 }
 
 export { TimeSelectorComponent };
+
