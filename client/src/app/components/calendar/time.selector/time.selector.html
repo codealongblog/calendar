@@ -7,7 +7,7 @@
         <div *ngFor="let minute of minutes">{{ minute.toString().padStart(2, '0') }}</div>
     </swiper>
 
-    <div *ngIf="date.format('HH') < 12">AM</div>
-    <div *ngIf="date.format('HH') >= 12">PM</div>
+    <div *ngIf="date.format('HH') < 12" class="AM-PM">AM</div>
+    <div *ngIf="date.format('HH') >= 12" class="AM-PM">PM</div>
 
 </div>

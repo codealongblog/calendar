@@ -28,6 +28,7 @@ class TimeSelectorComponent extends BaseComponent implements OnInit {
         this.config = {
             direction: 'vertical',
             slidesPerView: 3,
+            loop: true,
             centeredSlides: true,
             keyboard: false,
             grabCursor: true,
