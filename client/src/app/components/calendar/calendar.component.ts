@@ -23,7 +23,14 @@ export class CalendarComponent extends BaseComponent implements OnInit {
   ngOnInit () {
     this.today = moment().startOf('day');
     this.month = moment().startOf('month');
-    this.fetchEvents();
+    // @todo: make this real
+    if (this.userService.cachedUser) {
+      this.fetchEvents();
+    } else {
+      this.cleanup.push(this.userService.onLogin.subscribe(() => {
+        this.fetchEvents();
+      }));
+    }
   }
 
   private calculateDays (eventMap: Map<string, Array<CalendarEvent>>) : void {

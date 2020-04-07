@@ -1,9 +1,10 @@
 <mat-toolbar>
-    <span *ngIf="userName" class="avatar">
-        {{ userName }}
+    <span *ngIf="user" class="avatar">
+        <img [src]="user.photoURL">
+        {{ user.displayName }}
         <button mat-icon-button color="primary" aria-label="Logout" (click)="logout()">
             <mat-icon>exit_to_app</mat-icon>
         </button>
     </span>
-    <span *ngIf="!userName"><a routerLink="/login">Login</a></span>
+    <span *ngIf="!user" (click)="login()">Login</span>
 </mat-toolbar>

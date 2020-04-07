@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BaseComponent } from '../base.component';
-import { UserService } from 'src/app/services/user.service';
+import { UserService, User } from 'src/app/services/user.service';
+import { FirebaseService } from 'src/app/services/firebase.service';
 
 @Component({
     selector: 'app-topbar',
@@ -9,26 +10,30 @@ import { UserService } from 'src/app/services/user.service';
 })
 
 class TopbarComponent extends BaseComponent implements OnInit {
-    public userName: string;
+    public user: User;
 
-    constructor (private userService: UserService) {
+    constructor (private userService: UserService, private firebaseService: FirebaseService) {
         super();
         this.userService.onLogin.subscribe(() => {
-            this.userName = this.userService.cachedUser.name;
+            this.user = this.userService.cachedUser;
         });
         this.userService.onLogout.subscribe(() => {
-            this.userName = null;
+            this.user = null;
         });
     }
 
     public ngOnInit (): void {
         if (this.userService.isAuthenticated()) {
-            this.userName = this.userService.cachedUser.name;
+            this.user = this.userService.cachedUser;
         }
     }
 
     public logout () : void {
-        this.userService.logout();
+        this.firebaseService.signout().subscribe();
+    }
+
+    public login () : void {
+        this.cleanup.push(this.firebaseService.authenticate().subscribe());
     }
 }
 

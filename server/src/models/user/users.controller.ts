@@ -8,7 +8,7 @@ class UsersController {
     public static async get (req: express.Request, resp: express.Response) : Promise<void> {
         let user: User;
         try {
-            user = await UserModel.findById(req.params.id).lean();
+            user = await UserModel.findOne({ uid: req.params.uid}).lean();
         } catch (err) {
             console.log(err);
             resp.status(500);
@@ -18,10 +18,10 @@ class UsersController {
     }
 
     public static async search (req: express.Request, resp: express.Response) : Promise<void> {
-        if (req.query && req.query.userName) {
+        if (req.query && req.query.uid) {
             let user: User;
             try {
-                user = await UserModel.findOne({name: req.query.userName}).lean();
+                user = await UserModel.findOne({uid: req.query.uid}).lean();
                 if (user) {
                     resp.send(user);
                 } else {

@@ -6,7 +6,6 @@ import { AppRoutingModule } from './app.routing.module';
 import { AppComponent } from './app.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { HomeComponent } from './components/home/home.component';
-import { LoginComponent } from './components/login/login';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TopbarComponent } from './components/topbar/topbar';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -27,6 +26,7 @@ import { AddEventDialogComponent } from './components/calendar/add.event.dialog/
 import { UserService } from './services/user.service';
 import { CalendarEventService } from './services/calendar.event.service';
 import { TimeSelectorComponent } from './components/calendar/time.selector/time.selector';
+import { FirebaseService } from './services/firebase.service';
 
 @NgModule({
   declarations: [
@@ -35,7 +35,6 @@ import { TimeSelectorComponent } from './components/calendar/time.selector/time.
     AddEventDialogComponent,
     DashboardComponent,
     HomeComponent,
-    LoginComponent,
     TopbarComponent,
     TimeSelectorComponent
   ],
@@ -60,7 +59,8 @@ import { TimeSelectorComponent } from './components/calendar/time.selector/time.
   ],
   providers: [
     UserService,
-    CalendarEventService
+    CalendarEventService,
+    FirebaseService
   ],
   bootstrap: [AppComponent]
 })
