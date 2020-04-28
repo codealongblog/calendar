@@ -5,18 +5,6 @@ import { UserModel } from "./user.model";
 
 class UsersController {
 
-    public static async get (req: express.Request, resp: express.Response) : Promise<void> {
-        let user: User;
-        try {
-            user = await UserModel.findOne({ uid: req.params.uid}).lean();
-        } catch (err) {
-            console.log(err);
-            resp.status(500);
-            resp.end();
-        }
-        resp.send(user);
-    }
-
     public static async search (req: express.Request, resp: express.Response) : Promise<void> {
         if (req.query && req.query.uid) {
             let user: User;
@@ -43,7 +31,8 @@ class UsersController {
         const user = req.body;
         let createdUser: User;
         try {
-            createdUser = await UserModel.create(user);
+            console.log('heres my user:', user);
+            createdUser = await UserModel.findOneAndUpdate({ uid: req.params.uid }, user, { new: true, upsert: true });
             resp.status(200);
             resp.send(createdUser);
         } catch (err) {

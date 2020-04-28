@@ -3,7 +3,7 @@ import { ObjectId } from 'bson';
 
 interface CalendarEvent {
     _id?: ObjectId,
-    userId: ObjectId,
+    ownerUserId: ObjectId,
     name: string,
     startDate: Date,
     endDate: Date,
@@ -15,11 +15,18 @@ interface CalendarEventDocument extends Omit<CalendarEvent, '_id'>, mongoose.Doc
 
 let CalendarEventSchema: mongoose.Schema = new mongoose.Schema({
     name: { type: String },
-    userId: { type: ObjectId, required: true },
+    ownerUserId: { type: ObjectId, required: true, ref: 'user' },
     startDate: { type: Date, required: true },
     endDate: { type: Date, required: true },
     description: { type: String, required: false },
     crontab: { type: String, required: false },
+});
+
+CalendarEventSchema.virtual('owner', {
+    ref: 'user',
+    localField: 'ownerUserId',
+    foreignField: '_id',
+    justOne: true
 });
 
 export { CalendarEvent, CalendarEventSchema, CalendarEventDocument };

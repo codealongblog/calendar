@@ -5,6 +5,7 @@ const router = express.Router();
 
 router.post('/', CalendarEventsController.create);
 router.put('/:id', CalendarEventsController.update);
+router.get('/:id', CalendarEventsController.get);
 router.get('/', CalendarEventsController.search);
 router.delete('/:id', CalendarEventsController.delete);
 
