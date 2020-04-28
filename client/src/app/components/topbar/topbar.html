@@ -1,6 +1,6 @@
 <mat-toolbar>
     <span *ngIf="user" class="avatar">
-        <img [src]="user.photoURL">
+        <img [src]="user.photoURL" (click)="clickPhoto()">
         {{ user.displayName }}
         <button mat-icon-button color="primary" aria-label="Logout" (click)="logout()">
             <mat-icon>exit_to_app</mat-icon>

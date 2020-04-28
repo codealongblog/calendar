@@ -33,7 +33,7 @@ class CalendarEventService {
     }
 
     public get (id: string) : Observable<CalendarEvent> {
-        return this.httpClient.get(`http://localhost:8080/calendarEvents/${id}`);
+        return this.httpClient.get(`http://localhost:8080/calendarEvents/${id}`).pipe(map(this.convertCalendarEvent));
     }
 
     public search (ownerUserId: string, startDate: moment.Moment, endDate: moment.Moment) : Observable<any> {

@@ -18,13 +18,8 @@
             </label>
         </form>
     </mat-dialog-content>
-    <mat-dialog-actions *ngIf="!confirmingDelete">
-        <button mat-raised-button (click)="initiateDelete()" color="warn">Delete</button>
+    <mat-dialog-actions>
         <button mat-button mat-dialog-close>Cancel</button>
         <button mat-raised-button (click)="saveEvent()" color="primary">Save</button>
-    </mat-dialog-actions>
-    <mat-dialog-actions *ngIf="confirmingDelete">
-        <button mat-button (click)="cancelDelete()">Cancel</button>
-        <button mat-raised-button (click)="deleteEvent()" color="warn">Confirm</button>
     </mat-dialog-actions>
 </div>

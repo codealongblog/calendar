@@ -18,7 +18,6 @@ interface AddEventData {
 class AddEventDialogComponent extends BaseComponent implements OnInit {
     public calendarEvent: CalendarEvent;
     public addOrEdit: string = 'Add';
-    public confirmingDelete: boolean;
 
     constructor (private dialogRef: MatDialogRef<AddEventDialogComponent>, @Inject(MAT_DIALOG_DATA) private data: AddEventData, private userService: UserService, private calendarEventService: CalendarEventService) {
         super();
@@ -42,20 +41,6 @@ class AddEventDialogComponent extends BaseComponent implements OnInit {
             obs = this.calendarEventService.create(this.calendarEvent);
         }
         this.cleanup.push(obs.subscribe(() => {
-            this.dialogRef.close();
-        }));
-    }
-
-    public initiateDelete () : void {
-        this.confirmingDelete = true;
-    }
-
-    public cancelDelete () : void {
-        this.confirmingDelete = false;
-    }
-
-    public deleteEvent () : void {
-        this.cleanup.push(this.calendarEventService.delete(this.calendarEvent).subscribe(() => {
             this.dialogRef.close();
         }));
     }

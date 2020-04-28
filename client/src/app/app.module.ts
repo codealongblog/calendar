@@ -28,6 +28,7 @@ import { TimeSelectorComponent } from './components/calendar/time.selector/time.
 import { FirebaseService } from './services/firebase.service';
 import { AuthGuardService } from './services/auth.guard.service';
 import { ViewEventComponent } from './components/view.event/view.event.component';
+import { UserLoadGuardService } from './services/user.load.guard.service';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,8 @@ import { ViewEventComponent } from './components/view.event/view.event.component
     UserService,
     CalendarEventService,
     FirebaseService,
-    AuthGuardService
+    AuthGuardService,
+    UserLoadGuardService
   ],
   bootstrap: [AppComponent]
 })

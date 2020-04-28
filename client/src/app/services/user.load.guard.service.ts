@@ -2,19 +2,22 @@ import { Injectable } from '@angular/core';
 import { CanActivate } from '@angular/router';
 import { UserService } from './user.service';
 import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 
-class AuthGuardService implements CanActivate {
+class UserLoadGuardService implements CanActivate {
 	constructor ( private userService: UserService ) {}
 
 	public canActivate () : Observable<boolean> {
 		if (this.userService.isAuthenticating) {
-			return this.userService.doneAuthenticating;
+			return this.userService.doneAuthenticating.pipe(map(() => {
+				return true;
+			}));
 		} else {
-			return of(this.userService.isAuthenticated());
+			return of(true);
 		}
 	}
 }
 
-export { AuthGuardService };
+export { UserLoadGuardService };

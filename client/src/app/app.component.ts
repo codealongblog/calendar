@@ -15,6 +15,7 @@ export class AppComponent extends BaseComponent implements OnInit {
 
   constructor (private firebaseService: FirebaseService, private userService: UserService) {
     super();
+    this.userService.isAuthenticating = true;
     this.firebaseService.init();
   }
 

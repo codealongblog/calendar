@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject, of } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
-import { Router, ActivatedRouteSnapshot, ActivatedRoute } from '@angular/router';
+import { mergeMap } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 interface User {
     _id?: string;
@@ -17,6 +17,8 @@ class UserService {
     private _cachedUser: User;
     public onLogin: Subject<User>;
     public onLogout: Subject<void>;
+    public isAuthenticating: boolean;
+    public doneAuthenticating: Subject<boolean> = new Subject();
 
     public get cachedUser () : User {
         return this._cachedUser;
@@ -28,11 +30,6 @@ class UserService {
     }
 
     public isAuthenticated (): boolean {
-        const userString = localStorage.getItem('user');
-        if (userString) {
-            this._cachedUser = JSON.parse(userString);
-            this.onLogin.next(this._cachedUser);
-        }
         return !!this.cachedUser;
     }
 
@@ -45,13 +42,19 @@ class UserService {
 
     protected postLogin (user: any) : void {
         this._cachedUser = user;
+        this.isAuthenticating = false;
+        this.doneAuthenticating.next(true);
         this.onLogin.next(user);
         if (this.router.url === '/') {
             this.router.navigate(['dashboard']);
+        } else {
+
         }
     }
 
     public logout () : void {
+        this.isAuthenticating = false;
+        this.doneAuthenticating.next(false);
         if (this._cachedUser) {
             this._cachedUser = null;
             this.onLogout.next();
