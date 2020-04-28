@@ -18,7 +18,6 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { SwiperModule } from 'ngx-swiper-wrapper';
-
 import { AddEventDialogComponent } from './components/calendar/add.event.dialog/add.event.dialog';
 
 
@@ -27,6 +26,8 @@ import { UserService } from './services/user.service';
 import { CalendarEventService } from './services/calendar.event.service';
 import { TimeSelectorComponent } from './components/calendar/time.selector/time.selector';
 import { FirebaseService } from './services/firebase.service';
+import { AuthGuardService } from './services/auth.guard.service';
+import { ViewEventComponent } from './components/view.event/view.event.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { FirebaseService } from './services/firebase.service';
     DashboardComponent,
     HomeComponent,
     TopbarComponent,
-    TimeSelectorComponent
+    TimeSelectorComponent,
+    ViewEventComponent
   ],
   imports: [
     SwiperModule,
@@ -60,7 +62,8 @@ import { FirebaseService } from './services/firebase.service';
   providers: [
     UserService,
     CalendarEventService,
-    FirebaseService
+    FirebaseService,
+    AuthGuardService
   ],
   bootstrap: [AppComponent]
 })

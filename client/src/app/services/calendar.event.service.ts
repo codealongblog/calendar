@@ -3,14 +3,16 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import * as moment from 'moment';
 import { map } from 'rxjs/operators';
+import { User } from './user.service';
 
 interface CalendarEvent {
     _id?: string;
     name?: string;
-    userId?: string;
+    ownerUserId?: string;
     description?: string;
     startDate?: moment.Moment;
     endDate?: moment.Moment;
+    owner?: Partial<User>;
 }
 
 @Injectable()
@@ -30,8 +32,12 @@ class CalendarEventService {
         return this.httpClient.delete(`http://localhost:8080/calendarEvents/${calendarEvent._id}`);
     }
 
-    public search (userId: string, startDate: moment.Moment, endDate: moment.Moment) : Observable<any> {
-        return this.httpClient.get(`http://localhost:8080/calendarEvents?userId=${userId}&startDate=${startDate.format('YYYY-MM-DD')}&endDate=${endDate.format('YYYY-MM-DD')}`).pipe(map(this.convertCalendarEvents.bind(this)));
+    public get (id: string) : Observable<CalendarEvent> {
+        return this.httpClient.get(`http://localhost:8080/calendarEvents/${id}`);
+    }
+
+    public search (ownerUserId: string, startDate: moment.Moment, endDate: moment.Moment) : Observable<any> {
+        return this.httpClient.get(`http://localhost:8080/calendarEvents?ownerUserId=${ownerUserId}&startDate=${startDate.format('YYYY-MM-DD')}&endDate=${endDate.format('YYYY-MM-DD')}`).pipe(map(this.convertCalendarEvents.bind(this)));
     }
 
     private convertCalendarEvent (result: CalendarEvent) : CalendarEvent {

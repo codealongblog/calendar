@@ -1,0 +1,8 @@
+<ng-container *ngIf="calendarEvent">
+	<div>{{ calendarEvent.name }}</div>
+	<div>{{ calendarEvent.startDate | date : 'MM/dd/y hh:mm' }} - {{ calendarEvent.endDate | date : 'MM/dd/y hh:mm' }}</div>
+	<div>
+		Hosted By: <span *ngIf="isOwner()"> YOU </span><span *ngIf="!isOwner()">{{ calendarEvent.owner.displayName }}</span>
+	</div>
+	<div>{{ calendarEvent.description }}</div>
+</ng-container>

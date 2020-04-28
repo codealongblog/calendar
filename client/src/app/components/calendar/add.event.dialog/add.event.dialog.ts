@@ -29,8 +29,8 @@ class AddEventDialogComponent extends BaseComponent implements OnInit {
         if (this.calendarEvent._id) {
             this.addOrEdit = 'Edit';
         }
-        if (!this.calendarEvent.userId) {
-            this.calendarEvent.userId = this.userService.cachedUser._id;
+        if (!this.calendarEvent.ownerUserId) {
+            this.calendarEvent.ownerUserId = this.userService.cachedUser._id;
         }
     }
 

@@ -5,6 +5,7 @@ import { AddEventDialogComponent } from './add.event.dialog/add.event.dialog';
 import { UserService } from 'src/app/services/user.service';
 import { CalendarEventService, CalendarEvent } from 'src/app/services/calendar.event.service';
 import { BaseComponent } from '../base.component';
+import { Router } from '@angular/router';
 @Component({
   selector: 'calendar',
   templateUrl: './calendar.component.html',
@@ -16,21 +17,14 @@ export class CalendarComponent extends BaseComponent implements OnInit {
   public month: moment.Moment;
   public today: moment.Moment;
 
-  constructor (private matDialog: MatDialog, private userService: UserService, private calendarEventService: CalendarEventService) {
+  constructor (private matDialog: MatDialog, private userService: UserService, private calendarEventService: CalendarEventService, private router: Router) {
     super();
   }
 
   ngOnInit () {
     this.today = moment().startOf('day');
     this.month = moment().startOf('month');
-    // @todo: make this real
-    if (this.userService.cachedUser) {
-      this.fetchEvents();
-    } else {
-      this.cleanup.push(this.userService.onLogin.subscribe(() => {
-        this.fetchEvents();
-      }));
-    }
+    this.fetchEvents();
   }
 
   private calculateDays (eventMap: Map<string, Array<CalendarEvent>>) : void {
@@ -79,18 +73,15 @@ export class CalendarComponent extends BaseComponent implements OnInit {
 
   public clickDay (date: moment.Moment) : void {
     const ref: MatDialogRef<AddEventDialogComponent> = this.matDialog.open(AddEventDialogComponent, { data: { calendarEvent: { startDate: moment(date), endDate: moment(date) } } });
-    this.cleanup.push(ref.afterClosed().subscribe((calendarEvent: CalendarEvent) => {
+    this.cleanup.push(ref.afterClosed().subscribe(() => {
       this.fetchEvents();
     }));
   }
 
-  public editCalendarEvent (event: Event, calendarEventToEdit: CalendarEvent) : void {
+  public clickEvent (event: Event, calendarEventToEdit: CalendarEvent) : void {
     event.stopPropagation();
     event.preventDefault();
-    const ref: MatDialogRef<AddEventDialogComponent> = this.matDialog.open(AddEventDialogComponent, { data: { calendarEvent: calendarEventToEdit } });
-    this.cleanup.push(ref.afterClosed().subscribe(() => {
-      this.fetchEvents();
-    }));
+    this.router.navigate([`/view/${calendarEventToEdit._id}`]);
   }
 
 }
