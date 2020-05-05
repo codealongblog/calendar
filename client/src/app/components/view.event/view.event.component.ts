@@ -32,8 +32,8 @@ class ViewEventComponent extends BaseComponent implements OnInit {
 	}
 
 	public saveEvent () : void {
-		this.cleanup.push(this.calendarEventService.update(this.calendarEvent).subscribe(() => {
-			this.router.navigate(['/dashboard']);
+		this.cleanup.push(this.calendarEventService.update(this.calendarEvent).subscribe((updated: CalendarEvent) => {
+			this.calendarEvent = updated;
 		}));
 	}
 
@@ -51,7 +51,7 @@ class ViewEventComponent extends BaseComponent implements OnInit {
 		}));
 	}
 
-	public cancel () : void {
+	public back () : void {
 		this.router.navigate(['/dashboard']);
 	}
 }

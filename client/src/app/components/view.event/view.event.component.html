@@ -13,7 +13,7 @@
 	<ng-container *ngIf="isOwner">
 		<h2 mat-dialog-title> Edit Event for {{ calendarEvent.startDate | date: 'longDate' }}</h2>
 		<mat-dialog-content>
-			<form class="">
+			<form class="edit-form">
 				<div>
 					<mat-form-field class=""><input matInput placeholder="Name" [(ngModel)]="calendarEvent.name" name="name">
 					</mat-form-field>
@@ -24,17 +24,22 @@
 				</div>
 				<label>
 					<div>Start Time</div>
-					<time-selector [date]="calendarEvent.startDate"></time-selector>
+
+					<mat-form-field>
+						<input matInput type="datetime-local" placeholder="start date" [value]="calendarEvent.startDate.format('yyyy-MM-ddThh:mm')">
+					</mat-form-field>
 				</label>
 				<label>
 					<div>End Time</div>
-					<time-selector [date]="calendarEvent.endDate"></time-selector>
+					<mat-form-field>
+						<input matInput type="datetime-local" placeholder="start date" [value]="calendarEvent.endDate.format('yyyy-MM-ddThh:mm')">
+					</mat-form-field>
 				</label>
 			</form>
 		</mat-dialog-content>
 		<mat-dialog-actions *ngIf="!confirmingDelete">
 			<button mat-raised-button (click)="initiateDelete()" color="warn">Delete</button>
-			<button mat-button (click)="cancel()">Cancel</button>
+			<button mat-button (click)="back()">Back</button>
 			<button mat-raised-button (click)="saveEvent()" color="primary">Save</button>
 		</mat-dialog-actions>
 		<mat-dialog-actions *ngIf="confirmingDelete">
