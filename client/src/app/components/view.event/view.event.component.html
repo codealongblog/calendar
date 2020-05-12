@@ -24,17 +24,12 @@
 				</div>
 				<label>
 					<div>Start Time</div>
-
-					<mat-form-field>
-						<input matInput type="datetime-local" placeholder="start date" [value]="calendarEvent.startDate.format('yyyy-MM-ddThh:mm')">
-					</mat-form-field>
-				</label>
-				<label>
+					<ngx-timepicker-field [controlOnly]="true" (timeChanged)="updateStartTime($event)" [defaultTime]="calendarEvent.startDate.format('hh:mm A')"></ngx-timepicker-field>
+			</label>
+			<label>
 					<div>End Time</div>
-					<mat-form-field>
-						<input matInput type="datetime-local" placeholder="start date" [value]="calendarEvent.endDate.format('yyyy-MM-ddThh:mm')">
-					</mat-form-field>
-				</label>
+					<ngx-timepicker-field [controlOnly]="true" (timeChanged)="updateEndTime($event)"  [defaultTime]="calendarEvent.endDate.format('hh:mm A')"></ngx-timepicker-field>
+			</label>
 			</form>
 		</mat-dialog-content>
 		<mat-dialog-actions *ngIf="!confirmingDelete">

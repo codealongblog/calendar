@@ -3,6 +3,7 @@ import { BaseComponent } from '../base.component';
 import { CalendarEventService, CalendarEvent } from 'src/app/services/calendar.event.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
+import * as moment from 'moment';
 
 @Component({
 	selector: 'view-event',
@@ -40,6 +41,16 @@ class ViewEventComponent extends BaseComponent implements OnInit {
 	public initiateDelete () : void {
 		this.confirmingDelete = true;
 	}
+
+
+	public updateStartTime (time: any) : void {
+		this.calendarEvent.startDate = moment(`${this.calendarEvent.startDate.format('MM/DD/YYYY')} ${time}`);
+	}
+
+	public updateEndTime (time: any) : void {
+			this.calendarEvent.endDate = moment(`${this.calendarEvent.endDate.format('MM/DD/YYYY')} ${time}`);
+	}
+
 
 	public cancelDelete () : void {
 		this.confirmingDelete = false;

@@ -27,6 +27,7 @@ import { CalendarEventService } from './services/calendar.event.service';
 import { FirebaseService } from './services/firebase.service';
 import { AuthGuardService } from './services/auth.guard.service';
 import { UserLoadGuardService } from './services/user.load.guard.service';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { UserLoadGuardService } from './services/user.load.guard.service';
     MatDialogModule,
     MatCardModule,
     MatSelectModule,
+    NgxMaterialTimepickerModule,
     FormsModule,
     BrowserModule,
     HttpClientModule,

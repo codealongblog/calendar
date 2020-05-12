@@ -4,6 +4,7 @@ import { CalendarEvent, CalendarEventService } from 'src/app/services/calendar.e
 import { BaseComponent } from '../../base.component';
 import { UserService } from 'src/app/services/user.service';
 import { Observable } from 'rxjs';
+import * as moment from 'moment';
 
 interface AddEventData {
     calendarEvent: CalendarEvent;
@@ -23,7 +24,7 @@ class AddEventDialogComponent extends BaseComponent implements OnInit {
         super();
     }
 
-    public ngOnInit () {
+    public ngOnInit () : void {
         this.calendarEvent = Object.assign({  }, this.data.calendarEvent);
         if (this.calendarEvent._id) {
             this.addOrEdit = 'Edit';
@@ -31,6 +32,14 @@ class AddEventDialogComponent extends BaseComponent implements OnInit {
         if (!this.calendarEvent.ownerUserId) {
             this.calendarEvent.ownerUserId = this.userService.cachedUser._id;
         }
+    }
+
+    public updateStartTime (time: any) : void {
+        this.calendarEvent.startDate = moment(`${this.calendarEvent.startDate.format('MM/DD/YYYY')} ${time}`);
+    }
+
+    public updateEndTime (time: any) : void {
+        this.calendarEvent.endDate = moment(`${this.calendarEvent.endDate.format('MM/DD/YYYY')} ${time}`);
     }
 
     public saveEvent () : void {

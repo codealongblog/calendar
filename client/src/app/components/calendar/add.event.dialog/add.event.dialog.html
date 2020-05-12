@@ -10,9 +10,11 @@
             </div>
             <label>
                 <div>Start Time</div>
+                <ngx-timepicker-field [controlOnly]="true" (timeChanged)="updateStartTime($event)"></ngx-timepicker-field>
             </label>
             <label>
                 <div>End Time</div>
+                <ngx-timepicker-field [controlOnly]="true" (timeChanged)="updateEndTime($event)"></ngx-timepicker-field>
             </label>
         </form>
     </mat-dialog-content>
