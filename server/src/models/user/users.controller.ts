@@ -8,8 +8,9 @@ class UsersController {
     public static async search (req: express.Request, resp: express.Response) : Promise<void> {
         if (req.query && req.query.uid) {
             let user: User;
+            let uid: string = req.query.uid as string;
             try {
-                user = await UserModel.findOne({uid: req.query.uid}).lean();
+                user = await UserModel.findOne({uid: uid}).lean();
                 if (user) {
                     resp.send(user);
                 } else {
@@ -30,9 +31,10 @@ class UsersController {
     public static async create (req: express.Request, resp: express.Response) : Promise<void> {
         const user = req.body;
         let createdUser: User;
+        let uid: string = req.params.uid as string;
         try {
             console.log('heres my user:', user);
-            createdUser = await UserModel.findOneAndUpdate({ uid: req.params.uid }, user, { new: true, upsert: true });
+            createdUser = await UserModel.findOneAndUpdate({ uid: uid }, user, { new: true, upsert: true });
             resp.status(200);
             resp.send(createdUser);
         } catch (err) {

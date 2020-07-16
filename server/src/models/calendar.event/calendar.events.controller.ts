@@ -47,8 +47,11 @@ class CalendarEventsController {
 
     public static async search ( req: express.Request, resp: express.Response) : Promise<void> {
         let results: Array<CalendarEvent>;
+        let ownerUserId: string = req.query.ownerUserId as string;
+        let startDate: Date = new Date(req.query.startDate as string);
+        let endDate: Date = new Date(req.query.endDate as string);
         try {
-            results = await CalendarEventModel.find({ownerUserId: req.query.ownerUserId, startDate: { $gte: new Date(req.query.startDate) }, endDate: { $lte: new Date(req.query.endDate)} }).lean();
+            results = await CalendarEventModel.find({ownerUserId: ownerUserId, startDate: { $gte: startDate }, endDate: { $lte: endDate} }).lean();
             resp.status(200);
             resp.send(results);
         } catch (err) {
