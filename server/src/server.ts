@@ -4,10 +4,11 @@ import { UserRoutes } from './models/user/user.routes';
 import { CalendarEventRoutes } from './models/calendar.event/calendar.event.routes';
 import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
+import { Config } from './config';
 
 const app = express();
 const port = 8080;
-const MONGO_DB_URL = process.env.MONGO_DB_URL || 'mongodb://localhost:27017/calendar';
+const MONGO_DB_URL = Config.get("MONGO_DB_URL") || 'mongodb://localhost:27017/calendar';
 
 const serverStarted: Function = async () => {
     console.log(`Yo. I'm listening on ${port}`);
@@ -17,7 +18,8 @@ const serverStarted: Function = async () => {
     mongoose.connection.once('error', (err: Error) => {
         console.log(`DB ERROR: ${err}`);
     });
-    await mongoose.connect(MONGO_DB_URL);
+    mongoose.set('useCreateIndex', true);
+    await mongoose.connect(MONGO_DB_URL, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false});
 }
 
 app.use(bodyParser.urlencoded({ extended: false }));

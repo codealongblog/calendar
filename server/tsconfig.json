@@ -1,0 +1,22 @@
+{
+	"include": [
+		"./src/**/*.ts"
+	],
+	"exclude": [
+		"node_modules"
+	],
+	"compilerOptions": {
+		"target": "es2015",
+		"module": "CommonJS",
+		"moduleResolution": "Node",
+		"sourceMap": true,
+		"experimentalDecorators": true,
+		"outDir": "dist",
+		"lib": [
+			"ES2017",
+		],
+		"typeRoots": [
+			"node_modules/@types"
+		]
+	}
+}
