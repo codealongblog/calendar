@@ -5,6 +5,7 @@ import { CalendarEventRoutes } from './models/calendar.event/calendar.event.rout
 import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
 import { Config } from './config';
+import { requestLoggerMiddleware } from './middleware/request.logger.middleware';
 
 const app = express();
 const port = 8080;
@@ -25,6 +26,7 @@ const serverStarted: Function = async () => {
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
+app.use(requestLoggerMiddleware);
 
 app.use('/users', UserRoutes);
 app.use('/calendarEvents', CalendarEventRoutes);
