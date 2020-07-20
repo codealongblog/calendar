@@ -8,8 +8,8 @@ import { BaseComponent } from '../base.component';
 import { Router } from '@angular/router';
 @Component({
   selector: 'calendar',
-  templateUrl: './calendar.component.html',
-  styleUrls: ['./calendar.component.css']
+  templateUrl: './calendar.html',
+  styleUrls: ['./calendar.css']
 })
 export class CalendarComponent extends BaseComponent implements OnInit {
 

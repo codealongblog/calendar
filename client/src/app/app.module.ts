@@ -16,11 +16,11 @@ import { SwiperModule } from 'ngx-swiper-wrapper';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing.module';
 import { TopbarComponent } from './components/topbar/topbar';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { DashboardComponent } from './components/dashboard/dashboard';
 import { AddEventDialogComponent } from './components/calendar/add.event.dialog/add.event.dialog';
-import { CalendarComponent } from './components/calendar/calendar.component';
-import { HomeComponent } from './components/home/home.component';
-import { ViewEventComponent } from './components/view.event/view.event.component';
+import { CalendarComponent } from './components/calendar/calendar';
+import { HomeComponent } from './components/home/home';
+import { ViewEventComponent } from './components/view.event/view.event';
 
 import { UserService } from './services/user.service';
 import { CalendarEventService } from './services/calendar.event.service';

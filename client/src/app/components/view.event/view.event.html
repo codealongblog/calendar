@@ -1,6 +1,7 @@
-<ng-container *ngIf="calendarEvent">
-	<ng-container *ngIf="!isOwner">
+<button mat-button (click)="back()">Back</button>
 
+<div *ngIf="calendarEvent" class="event-container">
+	<ng-container *ngIf="!isOwner">
 		<div>{{ calendarEvent.name }}</div>
 		<div>{{ calendarEvent.startDate | date : 'MM/dd/y hh:mm' }} - {{ calendarEvent.endDate | date : 'MM/dd/y hh:mm' }}
 		</div>
@@ -24,17 +25,18 @@
 				</div>
 				<label>
 					<div>Start Time</div>
-					<ngx-timepicker-field [controlOnly]="true" (timeChanged)="updateStartTime($event)" [defaultTime]="calendarEvent.startDate.format('hh:mm A')"></ngx-timepicker-field>
-			</label>
-			<label>
+					<ngx-timepicker-field [controlOnly]="true" (timeChanged)="updateStartTime($event)"
+						[defaultTime]="calendarEvent.startDate.format('hh:mm A')"></ngx-timepicker-field>
+				</label>
+				<label>
 					<div>End Time</div>
-					<ngx-timepicker-field [controlOnly]="true" (timeChanged)="updateEndTime($event)"  [defaultTime]="calendarEvent.endDate.format('hh:mm A')"></ngx-timepicker-field>
-			</label>
+					<ngx-timepicker-field [controlOnly]="true" (timeChanged)="updateEndTime($event)"
+						[defaultTime]="calendarEvent.endDate.format('hh:mm A')"></ngx-timepicker-field>
+				</label>
 			</form>
 		</mat-dialog-content>
 		<mat-dialog-actions *ngIf="!confirmingDelete">
 			<button mat-raised-button (click)="initiateDelete()" color="warn">Delete</button>
-			<button mat-button (click)="back()">Back</button>
 			<button mat-raised-button (click)="saveEvent()" color="primary">Save</button>
 		</mat-dialog-actions>
 		<mat-dialog-actions *ngIf="confirmingDelete">
@@ -42,8 +44,8 @@
 			<button mat-raised-button (click)="deleteEvent()" color="warn">Confirm</button>
 		</mat-dialog-actions>
 	</ng-container>
+</div>
 
-</ng-container>
 <ng-container *ngIf="!calendarEvent">
 	LOADING...
 </ng-container>

@@ -7,8 +7,8 @@ import * as moment from 'moment';
 
 @Component({
 	selector: 'view-event',
-	templateUrl: './view.event.component.html',
-	styleUrls: ['./view.event.component.css']
+	templateUrl: './view.event.html',
+	styleUrls: ['./view.event.css']
 })
 
 class ViewEventComponent extends BaseComponent implements OnInit {

@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from './components/home/home.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { HomeComponent } from './components/home/home';
+import { DashboardComponent } from './components/dashboard/dashboard';
 import { AuthGuardService } from './services/auth.guard.service';
-import { ViewEventComponent } from './components/view.event/view.event.component';
+import { ViewEventComponent } from './components/view.event/view.event';
 import { UserLoadGuardService } from './services/user.load.guard.service';
 
 const routes: Routes = [
